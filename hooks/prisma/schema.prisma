@@ -64,7 +64,6 @@ model ZapRun {
 
 model ZapRunOutBox {
   id       String @id @default(uuid())
-  zapId    String
   zapRunId String @unique
   zapRun   ZapRun @relation(fields: [zapRunId], references: [id])
 }

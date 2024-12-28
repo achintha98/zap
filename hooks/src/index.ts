@@ -7,12 +7,17 @@ const client = new PrismaClient();
 
 app.post("hooks/zap/:userId/:zapId", (req, res) => {
     const userId = req.params.userId;
-    const password = req.params.zapId
+    const zapId = req.params.zapId
 
-    await client.zapRun.create({
-            data: {
-                    
-            }
-    })
+    client.$transaction(async (tx) => {
+        const run = await tx.zapRun.create({
+          data: {
+            zapId: zapId 
+          }})
 
+        await tx.zapRunOutBox.create({
+          data: {
+            zapRunId: run.zapId 
+          }})
+        })
 })
