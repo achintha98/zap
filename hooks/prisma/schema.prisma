@@ -44,7 +44,7 @@ model AvailabeTrigger {
 model Action {
   id       String         @id @default(uuid())
   actionId String
-  zapId    String         @unique
+  zapId    String
   type     AvailabeAction @relation(fields: [actionId], references: [id])
   zap      Zap            @relation(fields: [zapId], references: [id])
 }
@@ -58,6 +58,7 @@ model AvailabeAction {
 model ZapRun {
   id           String        @id @default(uuid())
   zapId        String
+  metaData     Json
   zapRunOutBox ZapRunOutBox?
   zap          Zap           @relation(fields: [zapId], references: [id])
 }
