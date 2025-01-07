@@ -42,11 +42,12 @@ model AvailabeTrigger {
 }
 
 model Action {
-  id       String         @id @default(uuid())
-  actionId String
-  zapId    String
-  type     AvailabeAction @relation(fields: [actionId], references: [id])
-  zap      Zap            @relation(fields: [zapId], references: [id])
+  id           String         @id @default(uuid())
+  actionId     String
+  zapId        String
+  sortingOrder Int            @default(0)
+  type         AvailabeAction @relation(fields: [actionId], references: [id])
+  zap          Zap            @relation(fields: [zapId], references: [id])
 }
 
 model AvailabeAction {
