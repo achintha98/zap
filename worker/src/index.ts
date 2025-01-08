@@ -21,9 +21,18 @@ await consumer.run({
         offset: message.offset,
         value: message.value?.toString()
     })
-    await new Promise(r => setTimeout(r, 10000))
-    await consumer.commitOffsets([{topic, partition, offset: message.offset}])
-  },
+    console.log("Starting 5-second delay...");
+      
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    
+    console.log("Delay completed, now committing offset...");
+
+    // Increment offset for committing
+    const nextOffset = (parseInt(message.offset) + 1).toString();
+    console.log(`Committing offset: ${nextOffset}`);
+    
+    await consumer.commitOffsets([{ topic, partition, offset: nextOffset }]);
+},
 })
 }
 
