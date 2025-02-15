@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { NextFunction, Router } from "express";
 import { signUpSchema, signInchema } from "../validationSchema";
-import { PrismaClient } from "@prisma/client";
+import { authMiddleWare } from "../middleware";
+import {prisma} from "../db"
 
 const userRouter = Router();
-const prisma = new PrismaClient();
 
-userRouter.post("/user", async (req, res, next) => {
+userRouter.post("/user", authMiddleWare,  async (req, res, next) => {
     try {
         console.log( req.body)
 
@@ -24,5 +24,7 @@ userRouter.post("/user", async (req, res, next) => {
         res.status(411).json({Message: "Invalid data"});
     }
 })
+
+
 
 export default userRouter;

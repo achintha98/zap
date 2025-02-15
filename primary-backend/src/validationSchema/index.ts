@@ -11,4 +11,9 @@ email: z.string(),
 password: z.string(),
 });
 
-export {signInchema, signUpSchema};
+const zapSchema = z.object({
+  trigger: z.object({
+
+  })})
+
+export {signInchema, signUpSchema, zapSchema};
