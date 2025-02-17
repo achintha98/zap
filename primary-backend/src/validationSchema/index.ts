@@ -12,7 +12,13 @@ password: z.string(),
 });
 
 const zapSchema = z.object({
-  trigger: z.object({
+  zap: z.object({
+    trigger: z.object({
+      triggerId: z.string()
+    }),
+    action: z.object({
+      actionId: z.string()
+    })
 
   })})
 

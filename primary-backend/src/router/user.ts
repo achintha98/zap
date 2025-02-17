@@ -5,7 +5,7 @@ import {prisma} from "../db"
 
 const userRouter = Router();
 
-userRouter.post("/user", authMiddleWare,  async (req, res, next) => {
+userRouter.post("/user",  async (req, res, next) => {
     try {
         console.log( req.body)
 
