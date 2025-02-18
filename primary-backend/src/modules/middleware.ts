@@ -7,30 +7,30 @@ dotenv.config();
 
 const SECRET = process.env.SECRET;
 
-interface UserRequest extends Request {
+export interface UserRequest extends Request {
     user: User;
 }
 
-export function authMiddleWare(req: UserRequest, res: Response, next: NextFunction) {
+export function authMiddleWare(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization;
     if(!authHeader) {
-        return res.status(403).json({ message: 'No token provided' });
+        res.status(403).json({ message: 'No token provided' });
+        return;
     }
     const jwtString = authHeader.split(" ")
     if(jwtString) {
-        return res.status(403).json({ message: 'No token provided' });
+        res.status(403).json({ message: 'No token provided' });
+        return;
     }
     if (!SECRET) {
         throw new Error('SECRET_KEY is not defined in environment variables');
     }
     try {
         const decodedUser = jwt.verify(jwtString, SECRET);
-        req.user = decodedUser as User;
-
+        next();
     }
     catch(error) {
-        return res.status(403).json({ error: "Forbidden: Invalid or expired token" });
+        res.status(403).json({ error: "Forbidden: Invalid or expired token" });
+        return;
     }
-
-    next();
 }

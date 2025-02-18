@@ -1,22 +1,21 @@
 import { NextFunction, Router } from "express";
 import { signUpSchema, signInchema } from "../validationSchema";
-import { authMiddleWare } from "../modules/middleware";
+import { authMiddleWare, UserRequest } from "../modules/middleware";
 import {prisma} from "../db"
 import * as bcrypt from "bcrypt";
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-dotenv.config();
 const userRouter = Router();
 
 const SALT_ROUND = process.env.SALT_ROUND || "10";
 const SECRET = process.env.SECRET;
 
 
-userRouter.post("/user", authMiddleWare,  async (req, res) => {
+userRouter.post("/user",  async (req, res) => {
     try {
-        console.log( req.body)
-
+        console.log( req.body);
+        console.log(process.env.SALT_ROUND);
+        console.log("salt:" + SALT_ROUND);
         const validatedData = signUpSchema.parse(req.body);
         console.log(validatedData);
         const hashedPassword = await bcrypt.hash(validatedData.password, SALT_ROUND)

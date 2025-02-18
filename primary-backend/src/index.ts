@@ -2,6 +2,9 @@ import  express  from "express";
 import cors from "cors";
 import userRouter from "./router/user";
 import zapRouter from "./router/zap";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
