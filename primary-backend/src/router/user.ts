@@ -45,10 +45,10 @@ userRouter.post("login", async (req, res,) => {
     })
 
     if(!user) {
-        res.status(401).json({error: 'Invalid username or password'})
+        res.status(401).json({error: 'Invalid username or password'});
         return;
     }
-    const isPassword = bcrypt.compare(user.Password, SALT_ROUND)
+    const isPassword = bcrypt.compare(password, user.Password);
 
     if(!isPassword) {
          res.status(401).json({ error: 'Invalid username or password' });
