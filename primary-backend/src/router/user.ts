@@ -4,6 +4,8 @@ import { authMiddleWare, UserRequest } from "../modules/middleware";
 import {prisma} from "../db"
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { generateKey } from "crypto";
+import {generateSalt, hashPassword} from "../modules/hashing";
 
 const userRouter = Router();
 
@@ -15,10 +17,11 @@ userRouter.post("/user",  async (req, res) => {
     try {
         console.log( req.body);
         console.log(process.env.SALT_ROUND);
-        console.log("salt:" + SALT_ROUND);
+        console.log(typeof(SALT_ROUND));
+        const generatedSalt = generateSalt(SALT_ROUND);
         const validatedData = signUpSchema.parse(req.body);
         console.log(validatedData);
-        const hashedPassword = await bcrypt.hash(validatedData.password, SALT_ROUND)
+        const hashedPassword = hashPassword(validatedData.password, generatedSalt)
         const newUser = await prisma.user.create({
             data: {
                 name: validatedData.username,
