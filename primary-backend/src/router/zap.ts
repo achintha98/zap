@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { authMiddleWare } from "../middleware";
+import { authMiddleWare } from "../modules/middleware";
 import {prisma} from "../db"
 import { zapSchema } from "../validationSchema";
 
