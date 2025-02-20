@@ -13,7 +13,7 @@ const SALT_ROUND = process.env.SALT_ROUND || "10";
 const SECRET = process.env.SECRET;
 
 
-userRouter.post("/user",  async (req, res) => {
+userRouter.post("/user/create",  async (req, res) => {
     try {
         console.log( req.body);
         console.log(process.env.SALT_ROUND);
@@ -36,7 +36,7 @@ userRouter.post("/user",  async (req, res) => {
     }
 })
 
-userRouter.post("login", async (req, res,) => {
+userRouter.post("/user/login", async (req, res,) => {
     const userName = req.body.username;
     const password = req.body.username;
 
