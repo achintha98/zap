@@ -11,7 +11,7 @@ export async function generateSalt(SALT_ROUND: String) {
     }
 }
 
-export async function hashPassword(actualPassword: string, generatedSalt: Promise<string>) {
+export async function hashPassword(actualPassword: string, generatedSalt: string) {
     try {
         const hashedPassword = await bcrypt.hash(actualPassword, generatedSalt);
         console.log('Hashed Password:', hashedPassword);

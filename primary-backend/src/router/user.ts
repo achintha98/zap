@@ -18,10 +18,10 @@ userRouter.post("/user",  async (req, res) => {
         console.log( req.body);
         console.log(process.env.SALT_ROUND);
         console.log(typeof(SALT_ROUND));
-        const generatedSalt = generateSalt(SALT_ROUND);
+        const generatedSalt = await generateSalt(SALT_ROUND);
         const validatedData = signUpSchema.parse(req.body);
         console.log(validatedData);
-        const hashedPassword = hashPassword(validatedData.password, generatedSalt)
+        const hashedPassword = await hashPassword(validatedData.password, generatedSalt)
         const newUser = await prisma.user.create({
             data: {
                 name: validatedData.username,
